@@ -1,10 +1,13 @@
+-- LocalScript for Studio testing (5-minute fake loader)
 
-local player = game:GetService("Players").LocalPlayer
-local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
 gui.Name = "SeedSpawnerLoader"
 gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
 
-local frame = Instance.new("Frame", gui)
+-- Main draggable frame
+local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 420, 0, 200)
 frame.Position = UDim2.new(0.5, -210, 0.5, -100)
 frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -12,8 +15,10 @@ frame.BackgroundTransparency = 0.2
 frame.BorderSizePixel = 0
 frame.Active = true
 frame.Draggable = true
+frame.Parent = gui
 
-local title = Instance.new("TextLabel", frame)
+-- Title label (small)
+local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 35)
 title.Position = UDim2.new(0, 0, 0, 0)
 title.BackgroundTransparency = 1
@@ -21,8 +26,10 @@ title.Text = "Seed Spawner Script loading."
 title.Font = Enum.Font.SourceSansBold
 title.TextSize = 22
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Parent = frame
 
-local bigLabel = Instance.new("TextLabel", frame)
+-- Big loading text
+local bigLabel = Instance.new("TextLabel")
 bigLabel.Size = UDim2.new(1, 0, 0, 50)
 bigLabel.Position = UDim2.new(0, 0, 0, 35)
 bigLabel.BackgroundTransparency = 1
@@ -30,20 +37,25 @@ bigLabel.Text = "Script Loading..."
 bigLabel.Font = Enum.Font.SourceSansBold
 bigLabel.TextSize = 32
 bigLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+bigLabel.Parent = frame
 
-local barBG = Instance.new("Frame", frame)
+-- Progress bar background
+local barBG = Instance.new("Frame")
 barBG.Size = UDim2.new(0.9, 0, 0, 30)
 barBG.Position = UDim2.new(0.05, 0, 1, -45)
 barBG.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 barBG.BorderSizePixel = 0
 barBG.ClipsDescendants = true
+barBG.Parent = frame
 
-local bar = Instance.new("Frame", barBG)
+-- Purple progress bar fill
+local bar = Instance.new("Frame")
 bar.Size = UDim2.new(0, 0, 1, 0)
 bar.BackgroundColor3 = Color3.fromRGB(128, 0, 255)
 bar.BorderSizePixel = 0
+bar.Parent = barBG
 
--- Animate dots on title
+-- Animate dots in title
 task.spawn(function()
 	while true do
 		for i = 0, 3 do
@@ -53,8 +65,8 @@ task.spawn(function()
 	end
 end)
 
--- Math-based loading bar (5 minutes)
-local duration = 5 * 60 -- 5 minutes in seconds
+-- Math-based loading progress (5 minutes)
+local duration = 5 * 60 -- seconds
 local startTime = tick()
 
 task.spawn(function()
